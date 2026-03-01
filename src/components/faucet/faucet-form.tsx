@@ -18,16 +18,21 @@ import { FundingResult } from "./funding-result";
 import { LoadingSpinner } from "@/components/shared/loading-spinner";
 import { FadeIn } from "@/components/shared/motion-wrapper";
 import { validateAddress } from "@/lib/stellar/address-validation";
+import { saveToHistory } from "@/lib/stellar/history";
 import type {
   Network,
   TokenCode,
   FundingResult as FundingResultType,
 } from "@/lib/stellar/types";
 
-export function FaucetForm() {
+interface FaucetFormProps {
+  network: Network;
+  onNetworkChange: (network: Network) => void;
+}
+
+export function FaucetForm({ network, onNetworkChange }: FaucetFormProps) {
   const t = useTranslations("faucet");
   const [address, setAddress] = useState("");
-  const [network, setNetwork] = useState<Network>("testnet");
   const [token, setToken] = useState<TokenCode>("XLM");
   const [captcha, setCaptcha] = useState("");
   const [loading, setLoading] = useState(false);
@@ -119,7 +124,7 @@ export function FaucetForm() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <NetworkSelector
               value={network}
-              onChange={setNetwork}
+              onChange={onNetworkChange}
               disabled={loading}
             />
 
@@ -171,26 +176,4 @@ export function FaucetForm() {
       </Card>
     </FadeIn>
   );
-}
-
-interface HistoryEntry {
-  address: string;
-  network: string;
-  token: string;
-  hash?: string;
-  timestamp: number;
-}
-
-function saveToHistory(entry: HistoryEntry) {
-  try {
-    const stored = localStorage.getItem("faucet-history");
-    const history: HistoryEntry[] = stored ? JSON.parse(stored) : [];
-    history.unshift(entry);
-    localStorage.setItem(
-      "faucet-history",
-      JSON.stringify(history.slice(0, 50)),
-    );
-  } catch {
-    // localStorage not available
-  }
 }

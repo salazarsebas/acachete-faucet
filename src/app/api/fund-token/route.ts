@@ -5,7 +5,7 @@ import { distributeToken } from "@/lib/stellar/token-distribution";
 import {
   CAPTCHA_ANSWER,
   TESTNET_TOKENS,
-  EXPLORER_BASE_URL,
+  buildExplorerUrl,
 } from "@/lib/stellar/constants";
 import type { Network, TokenCode } from "@/lib/stellar/types";
 
@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
         success: true,
         message: `Successfully sent ${token} to ${address}`,
         hash: result.hash,
-        explorerUrl: `${EXPLORER_BASE_URL}/testnet/tx/${result.hash}`,
+        explorerUrl: buildExplorerUrl(network, "tx", result.hash!),
       });
     }
 

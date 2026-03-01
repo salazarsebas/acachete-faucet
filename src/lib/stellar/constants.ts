@@ -15,6 +15,10 @@ export const NETWORKS: Record<Network, NetworkConfig> = {
   },
 };
 
+const TOKEN_ISSUER =
+  process.env.TOKEN_ISSUER_PUBLIC_KEY ||
+  "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5";
+
 export const TESTNET_TOKENS: Record<TokenCode, TokenInfo> = {
   XLM: {
     code: "XLM",
@@ -26,22 +30,30 @@ export const TESTNET_TOKENS: Record<TokenCode, TokenInfo> = {
   USDC: {
     code: "USDC",
     name: "USD Coin",
-    issuer: "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+    issuer: TOKEN_ISSUER,
     isNative: false,
     requiresTrustline: true,
-    description: "Circle's USD stablecoin on Stellar testnet",
+    description: "USD stablecoin on Stellar testnet",
   },
   EURC: {
     code: "EURC",
     name: "Euro Coin",
-    issuer: "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+    issuer: TOKEN_ISSUER,
     isNative: false,
     requiresTrustline: true,
-    description: "Circle's EUR stablecoin on Stellar testnet",
+    description: "EUR stablecoin on Stellar testnet",
   },
 };
 
 export const EXPLORER_BASE_URL = "https://stellar-explorer.acachete.xyz";
+
+export function buildExplorerUrl(
+  network: string,
+  type: "account" | "tx",
+  value: string,
+): string {
+  return `${EXPLORER_BASE_URL}/${network}/${type}/${value}`;
+}
 
 export const DISTRIBUTION_AMOUNT: Record<TokenCode, string> = {
   XLM: process.env.DISTRIBUTION_AMOUNT_XLM || "10000",

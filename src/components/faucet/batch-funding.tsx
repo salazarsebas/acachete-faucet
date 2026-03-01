@@ -22,12 +22,17 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "@/components/shared/motion-wrapper";
+import { BATCH_FUND_MAX } from "@/lib/stellar/constants";
 import type { BatchFundResult, Network } from "@/lib/stellar/types";
 
-export function BatchFunding() {
+interface BatchFundingProps {
+  network: Network;
+  onNetworkChange: (network: Network) => void;
+}
+
+export function BatchFunding({ network, onNetworkChange }: BatchFundingProps) {
   const t = useTranslations("faucet");
   const [addresses, setAddresses] = useState("");
-  const [network, setNetwork] = useState<Network>("testnet");
   const [captcha, setCaptcha] = useState("");
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState({ current: 0, total: 0 });
@@ -49,8 +54,8 @@ export function BatchFunding() {
       return;
     }
 
-    if (lines.length > 10) {
-      setError("Maximum 10 addresses per batch");
+    if (lines.length > BATCH_FUND_MAX) {
+      setError(`Maximum ${BATCH_FUND_MAX} addresses per batch`);
       return;
     }
 
@@ -98,7 +103,7 @@ export function BatchFunding() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <NetworkSelector
               value={network}
-              onChange={setNetwork}
+              onChange={onNetworkChange}
               disabled={loading}
             />
 

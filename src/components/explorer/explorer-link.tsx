@@ -1,8 +1,8 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import { EXPLORER_BASE_URL } from "@/lib/stellar/constants";
+import { useTranslations } from "next-intl";
+import { buildExplorerUrl } from "@/lib/stellar/constants";
 import { cn } from "@/lib/utils";
 
 interface ExplorerLinkProps {
@@ -18,11 +18,9 @@ export function ExplorerLink({
   network,
   className,
 }: ExplorerLinkProps) {
-  const locale = useLocale();
   const t = useTranslations("explorer");
 
-  const path = type === "account" ? "account" : "tx";
-  const href = `${EXPLORER_BASE_URL}/${locale}/${network}/${path}/${value}`;
+  const href = buildExplorerUrl(network, type, value);
   const label = type === "account" ? t("viewAccount") : t("viewTransaction");
 
   return (

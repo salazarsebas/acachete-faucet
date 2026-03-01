@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { CheckCircle, AlertCircle, ExternalLink } from "lucide-react";
+import { CheckCircle, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CopyButton } from "@/components/shared/copy-button";
 import { ExplorerLink } from "@/components/explorer/explorer-link";
@@ -48,17 +48,12 @@ export function FundingResult({
             <CopyButton text={result.hash} />
           </div>
           <div className="flex flex-wrap gap-2">
-            {result.explorerUrl && (
-              <a
-                href={result.explorerUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-xs transition-colors"
-              >
-                <ExternalLink className="h-3 w-3" />
-                {t("transactionId")}
-              </a>
-            )}
+            <ExplorerLink
+              type="tx"
+              value={result.hash}
+              network={network}
+              className="text-xs"
+            />
             <ExplorerLink
               type="account"
               value={address}

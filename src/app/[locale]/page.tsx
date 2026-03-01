@@ -10,6 +10,7 @@ import { NetworkStatus } from "@/components/dashboard/network-status";
 import { BalanceChecker } from "@/components/dashboard/balance-checker";
 import { FundingHistory } from "@/components/faucet/funding-history";
 import { BatchFunding } from "@/components/faucet/batch-funding";
+import { ApiDocs } from "@/components/faucet/api-docs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { Network } from "@/lib/stellar/types";
 
@@ -36,7 +37,7 @@ const jsonLdData = {
 };
 
 export default function Home() {
-  const [network] = useState<Network>("testnet");
+  const [network, setNetwork] = useState<Network>("testnet");
 
   return (
     <>
@@ -63,10 +64,10 @@ export default function Home() {
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="single">
-                <FaucetForm />
+                <FaucetForm network={network} onNetworkChange={setNetwork} />
               </TabsContent>
               <TabsContent value="batch">
-                <BatchFunding />
+                <BatchFunding network={network} onNetworkChange={setNetwork} />
               </TabsContent>
             </Tabs>
           </section>
@@ -81,6 +82,10 @@ export default function Home() {
 
           <section className="w-full max-w-md">
             <FundingHistory />
+          </section>
+
+          <section className="w-full max-w-md">
+            <ApiDocs />
           </section>
         </main>
         <Footer />

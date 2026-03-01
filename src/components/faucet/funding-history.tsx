@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,50 +12,23 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "@/components/shared/motion-wrapper";
-import { EXPLORER_BASE_URL } from "@/lib/stellar/constants";
-
-interface HistoryEntry {
-  address: string;
-  network: string;
-  token: string;
-  hash?: string;
-  timestamp: number;
-}
-
-function getHistorySnapshot(): string {
-  try {
-    return localStorage.getItem("faucet-history") || "[]";
-  } catch {
-    return "[]";
-  }
-}
-
-function getServerSnapshot(): string {
-  return "[]";
-}
-
-function subscribeToHistory(callback: () => void): () => void {
-  const handler = (e: StorageEvent) => {
-    if (e.key === "faucet-history") callback();
-  };
-  window.addEventListener("storage", handler);
-  return () => window.removeEventListener("storage", handler);
-}
+import { ExplorerLink } from "@/components/explorer/explorer-link";
+import {
+  clearHistory,
+  getHistorySnapshot,
+  getServerSnapshot,
+  subscribeToHistory,
+} from "@/lib/stellar/history";
+import type { HistoryEntry } from "@/lib/stellar/history";
 
 export function FundingHistory() {
   const t = useTranslations("faucet");
-  const [, setVersion] = useState(0);
   const rawHistory = useSyncExternalStore(
     subscribeToHistory,
     getHistorySnapshot,
     getServerSnapshot,
   );
   const history: HistoryEntry[] = JSON.parse(rawHistory);
-
-  const clearHistory = () => {
-    localStorage.removeItem("faucet-history");
-    setVersion((v) => v + 1);
-  };
 
   if (history.length === 0) return null;
 
@@ -101,14 +74,12 @@ export function FundingHistory() {
                     {entry.hash && (
                       <>
                         <CopyButton text={entry.hash} className="h-6 w-6" />
-                        <a
-                          href={`${EXPLORER_BASE_URL}/${entry.network}/tx/${entry.hash}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-foreground text-[10px] transition-colors"
-                        >
-                          TX
-                        </a>
+                        <ExplorerLink
+                          type="tx"
+                          value={entry.hash}
+                          network={entry.network}
+                          className="text-[10px]"
+                        />
                       </>
                     )}
                   </div>

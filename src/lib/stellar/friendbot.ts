@@ -1,6 +1,5 @@
-import { NETWORKS } from "./constants";
+import { NETWORKS, buildExplorerUrl } from "./constants";
 import type { FundingResult, Network } from "./types";
-import { EXPLORER_BASE_URL } from "./constants";
 
 export async function fundWithFriendbot(
   address: string,
@@ -43,6 +42,6 @@ export async function fundWithFriendbot(
     success: true,
     message: `Successfully funded account on ${network}!`,
     hash,
-    explorerUrl: `${EXPLORER_BASE_URL}/testnet/tx/${hash}`,
+    explorerUrl: buildExplorerUrl(network, "tx", hash),
   };
 }
