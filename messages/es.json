@@ -1,0 +1,117 @@
+{
+  "common": {
+    "appName": "Faucet de Stellar Testnet",
+    "poweredBy": "Desarrollado por Acachete Labs",
+    "loading": "Cargando...",
+    "submit": "Enviar",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "learnMore": "Saber más",
+    "viewOnExplorer": "Ver en Explorer",
+    "close": "Cerrar",
+    "language": "Idioma",
+    "theme": "Tema"
+  },
+  "faucet": {
+    "title": "Faucet de Stellar Testnet",
+    "subtitle": "Obtén tokens de prueba gratuitos para desarrollo en Stellar",
+    "networkLabel": "Red",
+    "addressLabel": "Dirección Stellar",
+    "addressPlaceholder": "G... o C...",
+    "addressHelp": "Ingresa una clave pública Stellar (G...) o dirección de contrato (C...)",
+    "tokenLabel": "Token",
+    "captchaLabel": "¿Cuál es el mejor laboratorio?",
+    "captchaPlaceholder": "Escribe la respuesta...",
+    "captchaHint": "Pista: la respuesta está en la URL",
+    "fundButton": "Obtener Tokens de Prueba",
+    "funding": "Financiando...",
+    "successTitle": "Éxito",
+    "errorTitle": "Error",
+    "transactionId": "ID de Transacción",
+    "standardAccount": "Cuenta Estándar",
+    "smartContract": "Contrato Inteligente",
+    "invalidAddress": "Dirección Inválida",
+    "batchTitle": "Financiamiento por Lote",
+    "batchSubtitle": "Financia múltiples cuentas a la vez (máx 10)",
+    "batchPlaceholder": "Ingresa una dirección por línea...",
+    "batchButton": "Financiar Todas",
+    "batchFunding": "Financiando {current} de {total}...",
+    "batchResults": "Resultados: {funded}/{total} financiadas exitosamente",
+    "historyTitle": "Historial de Financiamiento Reciente",
+    "historyEmpty": "Sin historial de financiamiento",
+    "clearHistory": "Limpiar Historial"
+  },
+  "tokens": {
+    "xlm": {
+      "name": "Stellar Lumens",
+      "description": "Token nativo de la red Stellar"
+    },
+    "usdc": {
+      "name": "USD Coin",
+      "description": "Stablecoin USD de Circle en Stellar testnet"
+    },
+    "eurc": {
+      "name": "Euro Coin",
+      "description": "Stablecoin EUR de Circle en Stellar testnet"
+    },
+    "native": "Nativo",
+    "requiresTrustline": "Requiere Trustline",
+    "noTrustline": "Esta cuenta no tiene una trustline para {token}.",
+    "addTrustlinePrompt": "Necesitas agregar una trustline antes de recibir {token}."
+  },
+  "trustlines": {
+    "pageTitle": "Entendiendo las Trustlines",
+    "pageSubtitle": "Aprende cómo funcionan las trustlines en la red Stellar",
+    "whatAre": "¿Qué son las Trustlines?",
+    "whatAreContent": "Las trustlines son mecanismos explícitos de opt-in en la red Stellar. Permiten a una cuenta mantener y recibir tokens específicos emitidos por otras cuentas. Sin una trustline, una cuenta no puede recibir ningún activo no nativo.",
+    "whyExist": "¿Por qué existen las Trustlines?",
+    "whyExistContent": "Las trustlines existen como una característica de seguridad. Previenen que tokens spam sean enviados a tu cuenta sin tu consentimiento. Esto es fundamentalmente diferente a redes como Ethereum donde cualquier token puede ser enviado a cualquier dirección. En Stellar, debes confiar explícitamente en un activo antes de recibirlo.",
+    "howToActivate": "Cómo activar una Trustline",
+    "howToActivateContent": "Para activar una trustline, necesitas enviar una operación Change Trust a la red Stellar. Esto requiere firmar una transacción con la clave secreta de tu cuenta.",
+    "whichToTrust": "En qué tokens confiar",
+    "whichToTrustContent": "Solo confía en tokens de emisores verificados. Revisa el archivo stellar.toml del emisor y verifica el dominio. Emisores conocidos incluyen Circle (USDC, EURC) y la SDF. En testnet, el emisor para USDC/EURC de prueba es el emisor estándar de prueba de la SDF.",
+    "practicalExample": "Ejemplo práctico con USDC testnet",
+    "practicalExampleContent": "Para recibir USDC en testnet: 1) Financia tu cuenta con Friendbot (10,000 XLM), 2) Agrega una trustline para USDC usando el emisor de prueba anterior, 3) Solicita USDC desde este faucet. Tu cuenta mostrará entonces balances de XLM y USDC.",
+    "summaryWhat": "¿Qué son las Trustlines?",
+    "summaryWhatBrief": "Las trustlines permiten a tu cuenta Stellar mantener tokens no nativos como USDC y EURC. Sin una, no puedes recibir estos activos.",
+    "summaryWhy": "¿Por qué necesito una para USDC/EURC?",
+    "summaryWhyBrief": "Stellar requiere opt-in explícito antes de recibir tokens. Esto te protege de tokens spam no deseados. Agrega una trustline para comenzar a recibir stablecoins.",
+    "readFullGuide": "Leer guía completa"
+  },
+  "explorer": {
+    "viewAccount": "Ver Cuenta",
+    "viewTransaction": "Ver Transacción",
+    "openInExplorer": "Abrir en Stellar Explorer"
+  },
+  "network": {
+    "statusTitle": "Estado de la Red",
+    "online": "En línea",
+    "offline": "Fuera de línea",
+    "degraded": "Degradada",
+    "lastLedger": "Último Ledger",
+    "protocolVersion": "Versión del Protocolo",
+    "sorobanEnabled": "Soroban Habilitado",
+    "testnet": "Testnet",
+    "futurenet": "Futurenet"
+  },
+  "balanceChecker": {
+    "title": "Verificador de Balances",
+    "subtitle": "Verifica balances de cualquier cuenta Stellar testnet",
+    "check": "Verificar Balances",
+    "checking": "Verificando...",
+    "noBalances": "No se encontraron balances",
+    "accountNotFound": "Cuenta no encontrada en esta red"
+  },
+  "metadata": {
+    "title": "Faucet de Stellar Testnet | Obtén XLM Gratis para Desarrollo",
+    "description": "Obtén tokens de Stellar testnet (XLM, USDC, EURC) gratis e instantáneamente para desarrollo blockchain. Soporte multi-token con educación sobre trustlines.",
+    "trustlinesTitle": "Entendiendo las Trustlines de Stellar | Acachete Labs",
+    "trustlinesDescription": "Aprende cómo funcionan las trustlines en la red Stellar. Guía paso a paso para agregar trustlines para USDC, EURC y otros tokens."
+  },
+  "footer": {
+    "stellarDocs": "Docs de Stellar",
+    "stellarLab": "Stellar Lab",
+    "acachete": "Acachete Labs",
+    "rights": "Todos los derechos reservados"
+  }
+}

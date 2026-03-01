@@ -65,13 +65,13 @@ flowchart TD
         Form --> Validation[Input Validation]
         Validation --> Request[API Request]
     end
-    
+
     subgraph Server
         Request --> Handler[Request Handler]
         Handler --> StellarSDK[Stellar SDK]
         StellarSDK --> Network[Stellar Network]
     end
-    
+
     Network --> Response[Transaction Response]
     Response --> UI
 ```
@@ -80,13 +80,13 @@ flowchart TD
 
 ### Technology Stack
 
-| Component | Technology | Description |
-|-----------|------------|-------------|
-| Frontend | Next.js 15.5.2 | React framework with App Router |
-| Styling | Tailwind CSS 4.x | Utility-first CSS framework |
-| UI Components | shadcn/ui | Accessible component system |
+| Component              | Technology         | Description                     |
+| ---------------------- | ------------------ | ------------------------------- |
+| Frontend               | Next.js 15.5.2     | React framework with App Router |
+| Styling                | Tailwind CSS 4.x   | Utility-first CSS framework     |
+| UI Components          | shadcn/ui          | Accessible component system     |
 | Blockchain Integration | Stellar SDK 14.1.1 | Official Stellar JavaScript SDK |
-| Deployment | Vercel | Edge-optimized hosting platform |
+| Deployment             | Vercel             | Edge-optimized hosting platform |
 
 ## 🚀 Getting Started
 
@@ -98,17 +98,20 @@ flowchart TD
 ### Installation
 
 1. Clone the repository
+
    ```bash
    git clone https://github.com/salazarsebas/acachete-faucet.git
    cd acachete-faucet
    ```
 
 2. Install dependencies
+
    ```bash
    bun install
    ```
 
 3. Start the development server
+
    ```bash
    bun dev
    ```
@@ -122,15 +125,19 @@ flowchart TD
 <summary><b>Click to view usage instructions</b></summary>
 
 ### Step 1: Select Network
+
 Choose between Testnet or Futurenet based on your development needs.
 
 ### Step 2: Enter Stellar Address
+
 Provide your public Stellar address (starting with 'G').
 
 ### Step 3: Request Tokens
+
 Click the "Get Test Tokens" button to receive XLM.
 
 ### Step 4: View Transaction
+
 After successful funding, you'll see the transaction ID and confirmation.
 
 </details>

@@ -1,0 +1,117 @@
+{
+  "common": {
+    "appName": "Stellar Testnet Faucet",
+    "poweredBy": "Powered by Acachete Labs",
+    "loading": "Loading...",
+    "submit": "Submit",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "learnMore": "Learn more",
+    "viewOnExplorer": "View on Explorer",
+    "close": "Close",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "faucet": {
+    "title": "Stellar Testnet Faucet",
+    "subtitle": "Get free test tokens for Stellar blockchain development",
+    "networkLabel": "Network",
+    "addressLabel": "Stellar Address",
+    "addressPlaceholder": "G... or C...",
+    "addressHelp": "Enter a Stellar public key (G...) or contract address (C...)",
+    "tokenLabel": "Token",
+    "captchaLabel": "What is the best lab?",
+    "captchaPlaceholder": "Type the answer...",
+    "captchaHint": "Hint: the answer is in the URL",
+    "fundButton": "Get Test Tokens",
+    "funding": "Funding...",
+    "successTitle": "Success",
+    "errorTitle": "Error",
+    "transactionId": "Transaction ID",
+    "standardAccount": "Standard Account",
+    "smartContract": "Smart Contract",
+    "invalidAddress": "Invalid Address",
+    "batchTitle": "Batch Funding",
+    "batchSubtitle": "Fund multiple accounts at once (max 10)",
+    "batchPlaceholder": "Enter one address per line...",
+    "batchButton": "Fund All",
+    "batchFunding": "Funding {current} of {total}...",
+    "batchResults": "Results: {funded}/{total} funded successfully",
+    "historyTitle": "Recent Funding History",
+    "historyEmpty": "No funding history yet",
+    "clearHistory": "Clear History"
+  },
+  "tokens": {
+    "xlm": {
+      "name": "Stellar Lumens",
+      "description": "Native token of the Stellar network"
+    },
+    "usdc": {
+      "name": "USD Coin",
+      "description": "Circle's USD stablecoin on Stellar testnet"
+    },
+    "eurc": {
+      "name": "Euro Coin",
+      "description": "Circle's EUR stablecoin on Stellar testnet"
+    },
+    "native": "Native",
+    "requiresTrustline": "Requires Trustline",
+    "noTrustline": "This account does not have a trustline for {token}.",
+    "addTrustlinePrompt": "You need to add a trustline before receiving {token}."
+  },
+  "trustlines": {
+    "pageTitle": "Understanding Trustlines",
+    "pageSubtitle": "Learn how trustlines work on the Stellar network",
+    "whatAre": "What are Trustlines?",
+    "whatAreContent": "Trustlines are explicit opt-in mechanisms on the Stellar network. They allow an account to hold and receive specific tokens issued by other accounts. Without a trustline, an account cannot receive any non-native asset.",
+    "whyExist": "Why do Trustlines exist?",
+    "whyExistContent": "Trustlines exist as a security feature. They prevent spam tokens from being sent to your account without your consent. This is fundamentally different from networks like Ethereum where any token can be sent to any address. On Stellar, you must explicitly trust an asset before receiving it.",
+    "howToActivate": "How to activate a Trustline",
+    "howToActivateContent": "To activate a trustline, you need to submit a Change Trust operation to the Stellar network. This requires signing a transaction with your account's secret key.",
+    "whichToTrust": "Which tokens to trust",
+    "whichToTrustContent": "Only trust tokens from verified issuers. Check the issuer's stellar.toml file and verify the domain. Well-known issuers include Circle (USDC, EURC) and the SDF. On testnet, the issuer for test USDC/EURC is the SDF's standard test issuer.",
+    "practicalExample": "Practical example with USDC testnet",
+    "practicalExampleContent": "To receive USDC on testnet: 1) Fund your account with Friendbot (10,000 XLM), 2) Add a trustline for USDC using the test issuer above, 3) Request USDC from this faucet. Your account will then show both XLM and USDC balances.",
+    "summaryWhat": "What are Trustlines?",
+    "summaryWhatBrief": "Trustlines let your Stellar account hold non-native tokens like USDC and EURC. Without one, you can't receive these assets.",
+    "summaryWhy": "Why do I need one for USDC/EURC?",
+    "summaryWhyBrief": "Stellar requires explicit opt-in before receiving tokens. This protects you from unwanted spam tokens. Add a trustline to start receiving stablecoins.",
+    "readFullGuide": "Read full guide"
+  },
+  "explorer": {
+    "viewAccount": "View Account",
+    "viewTransaction": "View Transaction",
+    "openInExplorer": "Open in Stellar Explorer"
+  },
+  "network": {
+    "statusTitle": "Network Status",
+    "online": "Online",
+    "offline": "Offline",
+    "degraded": "Degraded",
+    "lastLedger": "Last Ledger",
+    "protocolVersion": "Protocol Version",
+    "sorobanEnabled": "Soroban Enabled",
+    "testnet": "Testnet",
+    "futurenet": "Futurenet"
+  },
+  "balanceChecker": {
+    "title": "Balance Checker",
+    "subtitle": "Check balances for any Stellar testnet account",
+    "check": "Check Balances",
+    "checking": "Checking...",
+    "noBalances": "No balances found",
+    "accountNotFound": "Account not found on this network"
+  },
+  "metadata": {
+    "title": "Stellar Testnet Faucet | Get Free XLM for Development",
+    "description": "Get free Stellar testnet tokens (XLM, USDC, EURC) instantly for blockchain development. Multi-token support with trustline education.",
+    "trustlinesTitle": "Understanding Stellar Trustlines | Acachete Labs",
+    "trustlinesDescription": "Learn how trustlines work on the Stellar network. Step-by-step guide to adding trustlines for USDC, EURC, and other tokens."
+  },
+  "footer": {
+    "stellarDocs": "Stellar Docs",
+    "stellarLab": "Stellar Lab",
+    "acachete": "Acachete Labs",
+    "rights": "All rights reserved"
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "common": {
+    "appName": "Faucet de Stellar Testnet",
+    "poweredBy": "Desenvolvido por Acachete Labs",
+    "loading": "Carregando...",
+    "submit": "Enviar",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "learnMore": "Saiba mais",
+    "viewOnExplorer": "Ver no Explorer",
+    "close": "Fechar",
+    "language": "Idioma",
+    "theme": "Tema"
+  },
+  "faucet": {
+    "title": "Faucet de Stellar Testnet",
+    "subtitle": "Obtenha tokens de teste gratuitos para desenvolvimento em Stellar",
+    "networkLabel": "Rede",
+    "addressLabel": "Endereço Stellar",
+    "addressPlaceholder": "G... ou C...",
+    "addressHelp": "Insira uma chave pública Stellar (G...) ou endereço de contrato (C...)",
+    "tokenLabel": "Token",
+    "captchaLabel": "Qual é o melhor laboratório?",
+    "captchaPlaceholder": "Digite a resposta...",
+    "captchaHint": "Dica: a resposta está na URL",
+    "fundButton": "Obter Tokens de Teste",
+    "funding": "Financiando...",
+    "successTitle": "Sucesso",
+    "errorTitle": "Erro",
+    "transactionId": "ID da Transação",
+    "standardAccount": "Conta Padrão",
+    "smartContract": "Contrato Inteligente",
+    "invalidAddress": "Endereço Inválido",
+    "batchTitle": "Financiamento em Lote",
+    "batchSubtitle": "Financie múltiplas contas de uma vez (máx 10)",
+    "batchPlaceholder": "Insira um endereço por linha...",
+    "batchButton": "Financiar Todas",
+    "batchFunding": "Financiando {current} de {total}...",
+    "batchResults": "Resultados: {funded}/{total} financiadas com sucesso",
+    "historyTitle": "Histórico de Financiamento Recente",
+    "historyEmpty": "Sem histórico de financiamento",
+    "clearHistory": "Limpar Histórico"
+  },
+  "tokens": {
+    "xlm": {
+      "name": "Stellar Lumens",
+      "description": "Token nativo da rede Stellar"
+    },
+    "usdc": {
+      "name": "USD Coin",
+      "description": "Stablecoin USD da Circle em Stellar testnet"
+    },
+    "eurc": {
+      "name": "Euro Coin",
+      "description": "Stablecoin EUR da Circle em Stellar testnet"
+    },
+    "native": "Nativo",
+    "requiresTrustline": "Requer Trustline",
+    "noTrustline": "Esta conta não possui uma trustline para {token}.",
+    "addTrustlinePrompt": "Você precisa adicionar uma trustline antes de receber {token}."
+  },
+  "trustlines": {
+    "pageTitle": "Entendendo as Trustlines",
+    "pageSubtitle": "Aprenda como as trustlines funcionam na rede Stellar",
+    "whatAre": "O que são Trustlines?",
+    "whatAreContent": "Trustlines são mecanismos explícitos de opt-in na rede Stellar. Elas permitem que uma conta mantenha e receba tokens específicos emitidos por outras contas. Sem uma trustline, uma conta não pode receber nenhum ativo não nativo.",
+    "whyExist": "Por que existem as Trustlines?",
+    "whyExistContent": "As trustlines existem como uma característica de segurança. Elas previnem que tokens spam sejam enviados à sua conta sem seu consentimento. Isso é fundamentalmente diferente de redes como Ethereum onde qualquer token pode ser enviado para qualquer endereço. No Stellar, você deve confiar explicitamente em um ativo antes de recebê-lo.",
+    "howToActivate": "Como ativar uma Trustline",
+    "howToActivateContent": "Para ativar uma trustline, você precisa enviar uma operação Change Trust para a rede Stellar. Isso requer assinar uma transação com a chave secreta da sua conta.",
+    "whichToTrust": "Em quais tokens confiar",
+    "whichToTrustContent": "Confie apenas em tokens de emissores verificados. Verifique o arquivo stellar.toml do emissor e confirme o domínio. Emissores conhecidos incluem Circle (USDC, EURC) e a SDF. Na testnet, o emissor para USDC/EURC de teste é o emissor padrão de teste da SDF.",
+    "practicalExample": "Exemplo prático com USDC testnet",
+    "practicalExampleContent": "Para receber USDC na testnet: 1) Financie sua conta com Friendbot (10.000 XLM), 2) Adicione uma trustline para USDC usando o emissor de teste acima, 3) Solicite USDC neste faucet. Sua conta mostrará então saldos de XLM e USDC.",
+    "summaryWhat": "O que são Trustlines?",
+    "summaryWhatBrief": "Trustlines permitem que sua conta Stellar mantenha tokens não nativos como USDC e EURC. Sem uma, você não pode receber esses ativos.",
+    "summaryWhy": "Por que preciso de uma para USDC/EURC?",
+    "summaryWhyBrief": "Stellar requer opt-in explícito antes de receber tokens. Isso protege você de tokens spam indesejados. Adicione uma trustline para começar a receber stablecoins.",
+    "readFullGuide": "Ler guia completo"
+  },
+  "explorer": {
+    "viewAccount": "Ver Conta",
+    "viewTransaction": "Ver Transação",
+    "openInExplorer": "Abrir no Stellar Explorer"
+  },
+  "network": {
+    "statusTitle": "Status da Rede",
+    "online": "Online",
+    "offline": "Offline",
+    "degraded": "Degradada",
+    "lastLedger": "Último Ledger",
+    "protocolVersion": "Versão do Protocolo",
+    "sorobanEnabled": "Soroban Habilitado",
+    "testnet": "Testnet",
+    "futurenet": "Futurenet"
+  },
+  "balanceChecker": {
+    "title": "Verificador de Saldos",
+    "subtitle": "Verifique saldos de qualquer conta Stellar testnet",
+    "check": "Verificar Saldos",
+    "checking": "Verificando...",
+    "noBalances": "Nenhum saldo encontrado",
+    "accountNotFound": "Conta não encontrada nesta rede"
+  },
+  "metadata": {
+    "title": "Faucet de Stellar Testnet | Obtenha XLM Grátis para Desenvolvimento",
+    "description": "Obtenha tokens de Stellar testnet (XLM, USDC, EURC) grátis e instantaneamente para desenvolvimento blockchain. Suporte multi-token com educação sobre trustlines.",
+    "trustlinesTitle": "Entendendo as Trustlines da Stellar | Acachete Labs",
+    "trustlinesDescription": "Aprenda como as trustlines funcionam na rede Stellar. Guia passo a passo para adicionar trustlines para USDC, EURC e outros tokens."
+  },
+  "footer": {
+    "stellarDocs": "Docs da Stellar",
+    "stellarLab": "Stellar Lab",
+    "acachete": "Acachete Labs",
+    "rights": "Todos os direitos reservados"
+  }
+}
