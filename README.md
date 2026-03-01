@@ -11,7 +11,7 @@
 [![Stellar SDK](https://img.shields.io/badge/Stellar_SDK-14.1.1-08B5E5?style=for-the-badge&logo=stellar)](https://developers.stellar.org/docs)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-[View Demo](https://acachete.xyz) • [Report Bug](https://github.com/salazarsebas/acachete-faucet/issues) • [Request Feature](https://github.com/salazarsebas/acachete-faucet/issues)
+[View Demo](https://faucet-stellar.acachete.xyz) • [Report Bug](https://github.com/salazarsebas/acachete-faucet/issues) • [Request Feature](https://github.com/salazarsebas/acachete-faucet/issues)
 
 </div>
 

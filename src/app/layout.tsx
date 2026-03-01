@@ -14,13 +14,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://faucet-stellar.acachete.xyz"),
   title: "Stellar Testnet Faucet | Get Free XLM for Development",
   description: "Get free Stellar testnet tokens (XLM) instantly for blockchain development. A reliable Friendbot alternative with higher limits and 99.9% uptime.",
   keywords: "stellar testnet faucet, get test xlm, stellar friendbot alternative, stellar testnet tokens, free xlm testnet",
   openGraph: {
     title: "Stellar Testnet Faucet | Free XLM for Developers",
     description: "Get free Stellar testnet tokens instantly for blockchain development. Higher limits than Friendbot with no registration required.",
-    url: "https://acachete.xyz",
+    url: "https://faucet-stellar.acachete.xyz",
     siteName: "Acachete Labs",
     images: [
       {
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
     creator: "@acachetelabs",
   },
   alternates: {
-    canonical: "https://acachete.xyz",
+    canonical: "https://faucet-stellar.acachete.xyz",
   },
   robots: {
     index: true,

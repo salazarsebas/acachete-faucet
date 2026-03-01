@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://acachete.xyz/sitemap.xml',
+    sitemap: 'https://faucet-stellar.acachete.xyz/sitemap.xml',
   };
 }

@@ -29,7 +29,7 @@ export default function Home() {
     "@type": "WebApplication",
     "name": "Stellar Testnet Faucet",
     "description": "Free testnet token distributor for Stellar blockchain development",
-    "url": "https://acachete.xyz",
+    "url": "https://faucet-stellar.acachete.xyz",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "All",
     "offers": {
