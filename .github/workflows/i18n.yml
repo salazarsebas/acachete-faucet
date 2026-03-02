@@ -1,0 +1,78 @@
+name: i18n Validation
+
+on:
+  push:
+    branches: [main, feat/*]
+    paths: [messages/**]
+  pull_request:
+    branches: [main]
+    paths: [messages/**]
+
+jobs:
+  validate:
+    name: Translation keys sync
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Validate translation keys
+        run: |
+          bun --eval "
+          import en from './messages/en.json';
+          import es from './messages/es.json';
+          import pt from './messages/pt.json';
+
+          function getKeys(obj, prefix = '') {
+            return Object.entries(obj).flatMap(([k, v]) => {
+              const key = prefix ? prefix + '.' + k : k;
+              return typeof v === 'object' && v !== null ? getKeys(v, key) : [key];
+            });
+          }
+
+          const locales = { en, es, pt };
+          const keysByLocale = Object.fromEntries(
+            Object.entries(locales).map(([name, data]) => [name, new Set(getKeys(data))])
+          );
+
+          const reference = 'en';
+          const refKeys = keysByLocale[reference];
+          let failed = false;
+
+          for (const [name, keys] of Object.entries(keysByLocale)) {
+            if (name === reference) continue;
+
+            const missing = [...refKeys].filter(k => !keys.has(k));
+            const extra   = [...keys].filter(k => !refKeys.has(k));
+
+            if (missing.length > 0) {
+              console.error('\x1b[31m' + name + ' is missing ' + missing.length + ' key(s):\x1b[0m');
+              missing.forEach(k => console.error('  - ' + k));
+              failed = true;
+            }
+
+            if (extra.length > 0) {
+              console.error('\x1b[33m' + name + ' has ' + extra.length + ' extra key(s):\x1b[0m');
+              extra.forEach(k => console.error('  + ' + k));
+              failed = true;
+            }
+
+            if (missing.length === 0 && extra.length === 0) {
+              console.log('\x1b[32m' + name + ': ' + keys.size + ' keys — in sync with ' + reference + '\x1b[0m');
+            }
+          }
+
+          console.log('\nTotal keys per locale: en=' + refKeys.size + ' es=' + keysByLocale.es.size + ' pt=' + keysByLocale.pt.size);
+
+          if (failed) {
+            console.error('\n\x1b[31mTranslation keys are out of sync. Fix the differences above.\x1b[0m');
+            process.exit(1);
+          }
+
+          console.log('\x1b[32m\nAll locales in sync.\x1b[0m');
+          "
