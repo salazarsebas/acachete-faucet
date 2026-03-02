@@ -103,26 +103,26 @@ flowchart TD
 
 ## Technology Stack
 
-| Layer | Technology | Version |
-| --- | --- | --- |
-| Framework | Next.js (Turbopack) | 16.1.6 |
-| Language | TypeScript | 5.9 |
-| UI | React | 19.2.4 |
-| Styling | Tailwind CSS | 4.2.1 |
-| Components | shadcn/ui + Radix | -- |
-| Blockchain | @stellar/stellar-sdk | 14.5.0 |
-| i18n | next-intl | 4.8.3 |
-| Animations | Framer Motion | 12.x |
-| Analytics | @vercel/analytics | 1.6.1 |
-| Package Manager | Bun | latest |
+| Layer           | Technology           | Version |
+| --------------- | -------------------- | ------- |
+| Framework       | Next.js (Turbopack)  | 16.1.6  |
+| Language        | TypeScript           | 5.9     |
+| UI              | React                | 19.2.4  |
+| Styling         | Tailwind CSS         | 4.2.1   |
+| Components      | shadcn/ui + Radix    | --      |
+| Blockchain      | @stellar/stellar-sdk | 14.5.0  |
+| i18n            | next-intl            | 4.8.3   |
+| Animations      | Framer Motion        | 12.x    |
+| Analytics       | @vercel/analytics    | 1.6.1   |
+| Package Manager | Bun                  | latest  |
 
 ## Supported Tokens
 
-| Token | Amount | Issuer | Trustline Required |
-| --- | --- | --- | --- |
-| XLM | 10,000 | Native | No |
-| USDC | 100 | `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5` (Circle) | G... only |
-| EURC | 100 | `GB3Q6QDZYTHWT7E5PVS3W7FUT5GVAFC5KSZFFLPU25GO7VTC3NM2ZTVO` (Circle) | G... only |
+| Token | Amount | Issuer                                                              | Trustline Required |
+| ----- | ------ | ------------------------------------------------------------------- | ------------------ |
+| XLM   | 10,000 | Native                                                              | No                 |
+| USDC  | 100    | `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5` (Circle) | G... only          |
+| EURC  | 100    | `GB3Q6QDZYTHWT7E5PVS3W7FUT5GVAFC5KSZFFLPU25GO7VTC3NM2ZTVO` (Circle) | G... only          |
 
 `C...` addresses receive USDC/EURC via the Stellar Asset Contract (SAC) and do not need trustlines.
 
@@ -190,11 +190,11 @@ curl -X POST https://faucet-stellar.acachete.xyz/api/fund \
   }'
 ```
 
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `address` | string | Yes | Stellar public key (`G...`) |
-| `network` | string | Yes | `"testnet"` or `"futurenet"` |
-| `callbackUrl` | string | No | HTTPS webhook URL |
+| Field         | Type   | Required | Description                  |
+| ------------- | ------ | -------- | ---------------------------- |
+| `address`     | string | Yes      | Stellar public key (`G...`)  |
+| `network`     | string | Yes      | `"testnet"` or `"futurenet"` |
+| `callbackUrl` | string | No       | HTTPS webhook URL            |
 
 **Response (200):**
 
@@ -235,13 +235,13 @@ curl -X POST https://faucet-stellar.acachete.xyz/api/fund-token \
   }'
 ```
 
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `address` | string | Yes | `G...` or `C...` address |
-| `network` | string | Yes | `"testnet"` or `"futurenet"` |
-| `token` | string | Yes | `"USDC"` or `"EURC"` |
-| `captcha` | string | Yes | Must be `"acachete.xyz"` |
-| `callbackUrl` | string | No | HTTPS webhook URL |
+| Field         | Type   | Required | Description                  |
+| ------------- | ------ | -------- | ---------------------------- |
+| `address`     | string | Yes      | `G...` or `C...` address     |
+| `network`     | string | Yes      | `"testnet"` or `"futurenet"` |
+| `token`       | string | Yes      | `"USDC"` or `"EURC"`         |
+| `captcha`     | string | Yes      | Must be `"acachete.xyz"`     |
+| `callbackUrl` | string | No       | HTTPS webhook URL            |
 
 **Response (200):**
 
@@ -284,12 +284,12 @@ curl -X POST https://faucet-stellar.acachete.xyz/api/batch-fund \
   }'
 ```
 
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `addresses` | string[] | Yes | Up to 10 Stellar addresses |
-| `network` | string | Yes | `"testnet"` or `"futurenet"` |
-| `captcha` | string | Yes | Must be `"acachete.xyz"` |
-| `callbackUrl` | string | No | HTTPS webhook URL |
+| Field         | Type     | Required | Description                  |
+| ------------- | -------- | -------- | ---------------------------- |
+| `addresses`   | string[] | Yes      | Up to 10 Stellar addresses   |
+| `network`     | string   | Yes      | `"testnet"` or `"futurenet"` |
+| `captcha`     | string   | Yes      | Must be `"acachete.xyz"`     |
+| `callbackUrl` | string   | No       | HTTPS webhook URL            |
 
 **Response (200):**
 
@@ -318,10 +318,10 @@ Returns all balances for a Stellar account.
 curl "https://faucet-stellar.acachete.xyz/api/account/GABC...XYZ?network=testnet"
 ```
 
-| Parameter | Type | Required | Description |
-| --- | --- | --- | --- |
-| `address` | path | Yes | Stellar public key |
-| `network` | query | No | `"testnet"` (default) or `"futurenet"` |
+| Parameter | Type  | Required | Description                            |
+| --------- | ----- | -------- | -------------------------------------- |
+| `address` | path  | Yes      | Stellar public key                     |
+| `network` | query | No       | `"testnet"` (default) or `"futurenet"` |
 
 **Response (200):**
 
@@ -348,9 +348,9 @@ Returns current network status and ledger information.
 curl "https://faucet-stellar.acachete.xyz/api/network-status?network=testnet"
 ```
 
-| Parameter | Type | Required | Description |
-| --- | --- | --- | --- |
-| `network` | query | No | `"testnet"` (default) or `"futurenet"` |
+| Parameter | Type  | Required | Description                            |
+| --------- | ----- | -------- | -------------------------------------- |
+| `network` | query | No       | `"testnet"` (default) or `"futurenet"` |
 
 **Response (200):**
 
@@ -383,13 +383,13 @@ curl "https://faucet-stellar.acachete.xyz/api/network-status?network=testnet"
 
 ## Rate Limits
 
-| Endpoint | Per IP | Per Address |
-| --- | --- | --- |
-| `/api/fund` | 5/hour | 1/hour |
-| `/api/fund-token` | 5/hour | 1/6h per token |
-| `/api/batch-fund` | 2/hour | N/A |
-| `/api/account/:address` | 30/min | N/A |
-| `/api/network-status` | 60/min | N/A |
+| Endpoint                | Per IP | Per Address    |
+| ----------------------- | ------ | -------------- |
+| `/api/fund`             | 5/hour | 1/hour         |
+| `/api/fund-token`       | 5/hour | 1/6h per token |
+| `/api/batch-fund`       | 2/hour | N/A            |
+| `/api/account/:address` | 30/min | N/A            |
+| `/api/network-status`   | 60/min | N/A            |
 
 All responses include rate limit headers:
 
@@ -424,35 +424,35 @@ All funding endpoints (`/api/fund`, `/api/fund-token`, `/api/batch-fund`) accept
 }
 ```
 
-| Field | Type | Description |
-| --- | --- | --- |
-| `event` | string | `"fund"`, `"fund-token"`, or `"batch-fund"` |
-| `success` | boolean | Whether the funding succeeded |
-| `address` | string | Target address |
-| `network` | string | `"testnet"` or `"futurenet"` |
-| `token` | string? | Present for `fund-token` events |
-| `hash` | string? | Transaction hash (on success) |
-| `timestamp` | string | ISO 8601 timestamp |
+| Field       | Type    | Description                                 |
+| ----------- | ------- | ------------------------------------------- |
+| `event`     | string  | `"fund"`, `"fund-token"`, or `"batch-fund"` |
+| `success`   | boolean | Whether the funding succeeded               |
+| `address`   | string  | Target address                              |
+| `network`   | string  | `"testnet"` or `"futurenet"`                |
+| `token`     | string? | Present for `fund-token` events             |
+| `hash`      | string? | Transaction hash (on success)               |
+| `timestamp` | string  | ISO 8601 timestamp                          |
 
 ## Environment Variables
 
-| Variable | Required | Default | Description |
-| --- | --- | --- | --- |
-| `DISTRIBUTOR_SECRET_KEY` | Yes | -- | Distributor account secret key |
-| `DISTRIBUTOR_PUBLIC_KEY` | Yes | -- | Distributor account public key |
-| `DISTRIBUTION_AMOUNT_XLM` | No | `10000` | XLM per request |
-| `DISTRIBUTION_AMOUNT_USDC` | No | `100` | USDC per request |
-| `DISTRIBUTION_AMOUNT_EURC` | No | `100` | EURC per request |
-| `DAILY_ACCUMULATION_LIMIT` | No | `5` | Temp accounts for XLM accumulation |
+| Variable                   | Required | Default | Description                        |
+| -------------------------- | -------- | ------- | ---------------------------------- |
+| `DISTRIBUTOR_SECRET_KEY`   | Yes      | --      | Distributor account secret key     |
+| `DISTRIBUTOR_PUBLIC_KEY`   | Yes      | --      | Distributor account public key     |
+| `DISTRIBUTION_AMOUNT_XLM`  | No       | `10000` | XLM per request                    |
+| `DISTRIBUTION_AMOUNT_USDC` | No       | `100`   | USDC per request                   |
+| `DISTRIBUTION_AMOUNT_EURC` | No       | `100`   | EURC per request                   |
+| `DAILY_ACCUMULATION_LIMIT` | No       | `5`     | Temp accounts for XLM accumulation |
 
 ## Setup Scripts
 
-| Script | Command | Purpose |
-| --- | --- | --- |
-| `setup-all.ts` | `bun run scripts/setup-all.ts [--accounts N]` | Full bootstrap (distributor + trustlines + XLM accumulation) |
-| `setup-trustlines.ts` | `bun run scripts/setup-trustlines.ts` | Add USDC/EURC trustlines to Circle issuers |
-| `setup-distributor.ts` | `bun run scripts/setup-distributor.ts` | Create and fund distributor account |
-| `accumulate-xlm.ts` | `bun run scripts/accumulate-xlm.ts` | Accumulate XLM from temporary Friendbot-funded accounts |
+| Script                 | Command                                       | Purpose                                                      |
+| ---------------------- | --------------------------------------------- | ------------------------------------------------------------ |
+| `setup-all.ts`         | `bun run scripts/setup-all.ts [--accounts N]` | Full bootstrap (distributor + trustlines + XLM accumulation) |
+| `setup-trustlines.ts`  | `bun run scripts/setup-trustlines.ts`         | Add USDC/EURC trustlines to Circle issuers                   |
+| `setup-distributor.ts` | `bun run scripts/setup-distributor.ts`        | Create and fund distributor account                          |
+| `accumulate-xlm.ts`    | `bun run scripts/accumulate-xlm.ts`           | Accumulate XLM from temporary Friendbot-funded accounts      |
 
 ## CI/CD
 
