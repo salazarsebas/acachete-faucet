@@ -39,7 +39,21 @@
     "batchResults": "Results: {funded}/{total} funded successfully",
     "historyTitle": "Recent Funding History",
     "historyEmpty": "No funding history yet",
-    "clearHistory": "Clear History"
+    "clearHistory": "Clear History",
+    "navFaucet": "Faucet",
+    "validationInvalidAddress": "Please enter a valid Stellar address (G... or C...)",
+    "validationCaptchaRequired": "Please answer the verification question",
+    "connectionError": "Failed to connect to the server. Please try again.",
+    "fundSuccess": "Successfully funded account on {network}!",
+    "fundTokenSuccess": "Successfully sent {token} to {address}",
+    "addressTooltipG": "Ed25519 public key",
+    "addressTooltipC": "Soroban smart contract address",
+    "addressesLabel": "Addresses",
+    "batchMinAddress": "Please enter at least one address",
+    "batchMaxAddress": "Maximum {max} addresses per batch",
+    "batchConnectionError": "Failed to connect to the server",
+    "fundedBadge": "Funded",
+    "failedBadge": "Failed"
   },
   "tokens": {
     "xlm": {
@@ -57,7 +71,8 @@
     "native": "Native",
     "requiresTrustline": "Requires Trustline",
     "noTrustline": "This account does not have a trustline for {token}.",
-    "addTrustlinePrompt": "You need to add a trustline before receiving {token}."
+    "addTrustlinePrompt": "You need to add a trustline before receiving {token}.",
+    "issuerLabel": "Issuer"
   },
   "trustlines": {
     "pageTitle": "Understanding Trustlines",
@@ -145,7 +160,10 @@
     "check": "Check Balances",
     "checking": "Checking...",
     "noBalances": "No balances found",
-    "accountNotFound": "Account not found on this network"
+    "accountNotFound": "Account not found on this network",
+    "invalidAddress": "Invalid address",
+    "addressLabel": "Address",
+    "addressPlaceholder": "G... or C..."
   },
   "metadata": {
     "title": "Stellar Testnet Faucet | Get Free XLM for Development",

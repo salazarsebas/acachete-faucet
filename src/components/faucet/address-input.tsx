@@ -45,8 +45,8 @@ export function AddressInput({ value, onChange, disabled }: AddressInputProps) {
             </TooltipTrigger>
             <TooltipContent>
               {addressType === "G"
-                ? "Ed25519 public key"
-                : "Soroban smart contract address"}
+                ? t("addressTooltipG")
+                : t("addressTooltipC")}
             </TooltipContent>
           </Tooltip>
         )}

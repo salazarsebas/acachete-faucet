@@ -50,12 +50,12 @@ export function BatchFunding({ network, onNetworkChange }: BatchFundingProps) {
       .filter((l) => l.length > 0);
 
     if (lines.length === 0) {
-      setError("Please enter at least one address");
+      setError(t("batchMinAddress"));
       return;
     }
 
     if (lines.length > BATCH_FUND_MAX) {
-      setError(`Maximum ${BATCH_FUND_MAX} addresses per batch`);
+      setError(t("batchMaxAddress", { max: BATCH_FUND_MAX }));
       return;
     }
 
@@ -93,7 +93,7 @@ export function BatchFunding({ network, onNetworkChange }: BatchFundingProps) {
         setProgress({ current: data.total, total: data.total });
       }
     } catch {
-      setError("Failed to connect to the server");
+      setError(t("batchConnectionError"));
     } finally {
       setLoading(false);
     }
@@ -121,7 +121,7 @@ export function BatchFunding({ network, onNetworkChange }: BatchFundingProps) {
 
             <div className="space-y-2">
               <Label htmlFor="batch-addresses" className="text-sm font-medium">
-                Addresses
+                {t("addressesLabel")}
               </Label>
               <Textarea
                 id="batch-addresses"
@@ -185,7 +185,7 @@ export function BatchFunding({ network, onNetworkChange }: BatchFundingProps) {
                               variant="outline"
                               className="border-green-500/30 text-[10px] text-green-600"
                             >
-                              Funded
+                              {t("fundedBadge")}
                             </Badge>
                             {result.hash && (
                               <CopyButton
@@ -196,7 +196,7 @@ export function BatchFunding({ network, onNetworkChange }: BatchFundingProps) {
                           </>
                         ) : (
                           <Badge variant="destructive" className="text-[10px]">
-                            Failed
+                            {t("failedBadge")}
                           </Badge>
                         )}
                       </div>

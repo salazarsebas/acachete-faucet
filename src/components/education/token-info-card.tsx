@@ -33,7 +33,7 @@ export function TokenInfoCard({ token }: TokenInfoCardProps) {
         </p>
         {token.issuer && (
           <p className="text-muted-foreground/70 mt-1 font-mono text-[10px] break-all">
-            Issuer: {token.issuer}
+            {t("issuerLabel")}: {token.issuer}
           </p>
         )}
       </CardContent>

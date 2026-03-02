@@ -48,7 +48,7 @@ export function FaucetForm({ network, onNetworkChange }: FaucetFormProps) {
     if (addressType === "invalid") {
       setResult({
         success: false,
-        message: "Please enter a valid Stellar address (G... or C...)",
+        message: t("validationInvalidAddress"),
       });
       return;
     }
@@ -56,7 +56,7 @@ export function FaucetForm({ network, onNetworkChange }: FaucetFormProps) {
     if (needsCaptcha && !captcha.trim()) {
       setResult({
         success: false,
-        message: "Please answer the verification question",
+        message: t("validationCaptchaRequired"),
       });
       return;
     }
@@ -99,7 +99,11 @@ export function FaucetForm({ network, onNetworkChange }: FaucetFormProps) {
 
       setResult({
         success: data.success,
-        message: data.message,
+        message: data.success
+          ? token === "XLM"
+            ? t("fundSuccess", { network })
+            : t("fundTokenSuccess", { token, address: address.trim() })
+          : data.message,
         hash: data.hash,
         explorerUrl: data.explorerUrl,
       });
@@ -116,7 +120,7 @@ export function FaucetForm({ network, onNetworkChange }: FaucetFormProps) {
     } catch {
       setResult({
         success: false,
-        message: "Failed to connect to the server. Please try again.",
+        message: t("connectionError"),
       });
     } finally {
       setLoading(false);

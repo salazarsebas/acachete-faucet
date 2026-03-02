@@ -39,7 +39,21 @@
     "batchResults": "Resultados: {funded}/{total} financiadas com sucesso",
     "historyTitle": "Histórico de Financiamento Recente",
     "historyEmpty": "Sem histórico de financiamento",
-    "clearHistory": "Limpar Histórico"
+    "clearHistory": "Limpar Histórico",
+    "navFaucet": "Faucet",
+    "validationInvalidAddress": "Insira um endereço Stellar válido (G... ou C...)",
+    "validationCaptchaRequired": "Por favor responda a pergunta de verificação",
+    "connectionError": "Não foi possível conectar ao servidor. Tente novamente.",
+    "fundSuccess": "Conta financiada com sucesso em {network}!",
+    "fundTokenSuccess": "{token} enviado com sucesso para {address}",
+    "addressTooltipG": "Chave pública Ed25519",
+    "addressTooltipC": "Endereço de smart contract Soroban",
+    "addressesLabel": "Endereços",
+    "batchMinAddress": "Insira pelo menos um endereço",
+    "batchMaxAddress": "Máximo de {max} endereços por lote",
+    "batchConnectionError": "Não foi possível conectar ao servidor",
+    "fundedBadge": "Financiada",
+    "failedBadge": "Falhou"
   },
   "tokens": {
     "xlm": {
@@ -57,7 +71,8 @@
     "native": "Nativo",
     "requiresTrustline": "Requer Trustline",
     "noTrustline": "Esta conta não possui uma trustline para {token}.",
-    "addTrustlinePrompt": "Você precisa adicionar uma trustline antes de receber {token}."
+    "addTrustlinePrompt": "Você precisa adicionar uma trustline antes de receber {token}.",
+    "issuerLabel": "Emissor"
   },
   "trustlines": {
     "pageTitle": "Entendendo as Trustlines",
@@ -145,7 +160,10 @@
     "check": "Verificar Saldos",
     "checking": "Verificando...",
     "noBalances": "Nenhum saldo encontrado",
-    "accountNotFound": "Conta não encontrada nesta rede"
+    "accountNotFound": "Conta não encontrada nesta rede",
+    "invalidAddress": "Endereço inválido",
+    "addressLabel": "Endereço",
+    "addressPlaceholder": "G... ou C..."
   },
   "metadata": {
     "title": "Faucet de Stellar Testnet | Obtenha XLM Grátis para Desenvolvimento",

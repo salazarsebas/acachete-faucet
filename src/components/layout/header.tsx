@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 export function Header() {
   const locale = useLocale();
   const t = useTranslations("trustlines");
+  const tFaucet = useTranslations("faucet");
   const { resolvedTheme } = useTheme();
 
   return (
@@ -36,7 +37,7 @@ export function Header() {
             href={`/${locale}`}
             className="text-muted-foreground hover:text-foreground text-xs font-medium transition-colors"
           >
-            Faucet
+            {tFaucet("navFaucet")}
           </Link>
           <Link
             href={`/${locale}/trustlines`}

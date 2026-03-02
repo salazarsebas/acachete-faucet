@@ -37,6 +37,10 @@
       },
     },
   },
+  "patchedDependencies": {
+    "base32.js@0.1.0": "patches/base32.js@0.1.0.patch",
+    "follow-redirects@1.15.11": "patches/follow-redirects@1.15.11.patch",
+  },
   "overrides": {
     "minimatch": ">=3.1.3",
   },

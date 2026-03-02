@@ -40,7 +40,7 @@ export function BalanceChecker({ network }: BalanceCheckerProps) {
     setBalances(null);
 
     if (validateAddress(address.trim()) === "invalid") {
-      setError("Invalid address");
+      setError(t("invalidAddress"));
       return;
     }
 
@@ -76,13 +76,13 @@ export function BalanceChecker({ network }: BalanceCheckerProps) {
           <form onSubmit={handleCheck} className="flex gap-2">
             <div className="flex-1">
               <Label htmlFor="balance-address" className="sr-only">
-                Address
+                {t("addressLabel")}
               </Label>
               <Input
                 id="balance-address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                placeholder="G... or C..."
+                placeholder={t("addressPlaceholder")}
                 className="font-mono text-xs"
                 disabled={loading}
               />

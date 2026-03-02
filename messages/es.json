@@ -39,7 +39,21 @@
     "batchResults": "Resultados: {funded}/{total} financiadas exitosamente",
     "historyTitle": "Historial de Financiamiento Reciente",
     "historyEmpty": "Sin historial de financiamiento",
-    "clearHistory": "Limpiar Historial"
+    "clearHistory": "Limpiar Historial",
+    "navFaucet": "Faucet",
+    "validationInvalidAddress": "Ingresa una dirección Stellar válida (G... o C...)",
+    "validationCaptchaRequired": "Por favor responde la pregunta de verificación",
+    "connectionError": "No se pudo conectar al servidor. Intenta de nuevo.",
+    "fundSuccess": "Cuenta financiada exitosamente en {network}!",
+    "fundTokenSuccess": "{token} enviado exitosamente a {address}",
+    "addressTooltipG": "Clave pública Ed25519",
+    "addressTooltipC": "Dirección de smart contract Soroban",
+    "addressesLabel": "Direcciones",
+    "batchMinAddress": "Ingresa al menos una dirección",
+    "batchMaxAddress": "Máximo {max} direcciones por lote",
+    "batchConnectionError": "No se pudo conectar al servidor",
+    "fundedBadge": "Financiada",
+    "failedBadge": "Fallida"
   },
   "tokens": {
     "xlm": {
@@ -57,7 +71,8 @@
     "native": "Nativo",
     "requiresTrustline": "Requiere Trustline",
     "noTrustline": "Esta cuenta no tiene una trustline para {token}.",
-    "addTrustlinePrompt": "Necesitas agregar una trustline antes de recibir {token}."
+    "addTrustlinePrompt": "Necesitas agregar una trustline antes de recibir {token}.",
+    "issuerLabel": "Emisor"
   },
   "trustlines": {
     "pageTitle": "Entendiendo las Trustlines",
@@ -145,7 +160,10 @@
     "check": "Verificar Balances",
     "checking": "Verificando...",
     "noBalances": "No se encontraron balances",
-    "accountNotFound": "Cuenta no encontrada en esta red"
+    "accountNotFound": "Cuenta no encontrada en esta red",
+    "invalidAddress": "Dirección inválida",
+    "addressLabel": "Dirección",
+    "addressPlaceholder": "G... o C..."
   },
   "metadata": {
     "title": "Faucet de Stellar Testnet | Obtén XLM Gratis para Desarrollo",
