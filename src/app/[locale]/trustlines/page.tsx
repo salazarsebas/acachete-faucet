@@ -25,24 +25,67 @@ import {
   StaggerItem,
 } from "@/components/shared/motion-wrapper";
 
-const TRUSTLINE_CODE_EXAMPLE = `import { TransactionBuilder, Operation, Asset, Networks, Keypair } from '@stellar/stellar-sdk';
+const USDC_TRUSTLINE_CODE = `import { TransactionBuilder, Operation, Asset, Networks, Keypair } from '@stellar/stellar-sdk';
 
 const keypair = Keypair.fromSecret('YOUR_SECRET_KEY');
 const server = new Horizon.Server('https://horizon-testnet.stellar.org');
 const account = await server.loadAccount(keypair.publicKey());
 
-const asset = new Asset('USDC', 'GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5');
+// Circle's official USDC issuer on testnet
+const usdc = new Asset('USDC', 'GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5');
 
 const transaction = new TransactionBuilder(account, {
   fee: '100',
   networkPassphrase: Networks.TESTNET
 })
-  .addOperation(Operation.changeTrust({ asset }))
+  .addOperation(Operation.changeTrust({ asset: usdc }))
   .setTimeout(30)
   .build();
 
 transaction.sign(keypair);
 await server.submitTransaction(transaction);`;
+
+const EURC_TRUSTLINE_CODE = `// Circle's official EURC issuer on testnet (different from USDC!)
+const eurc = new Asset('EURC', 'GB3Q6QDZYTHWT7E5PVS3W7FUT5GVAFC5KSZFFLPU25GO7VTC3NM2ZTVO');
+
+const transaction = new TransactionBuilder(account, {
+  fee: '100',
+  networkPassphrase: Networks.TESTNET
+})
+  .addOperation(Operation.changeTrust({ asset: eurc }))
+  .setTimeout(30)
+  .build();
+
+transaction.sign(keypair);
+await server.submitTransaction(transaction);`;
+
+const SAC_TRANSFER_CODE = `import { rpc, TransactionBuilder, Asset, Operation, Address, nativeToScVal } from '@stellar/stellar-sdk';
+
+// Derive the SAC contract ID from the classic asset
+const usdc = new Asset('USDC', 'GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5');
+const sacContractId = usdc.contractId(Networks.TESTNET);
+
+// Build SAC transfer — no trustline needed on the contract
+const tx = new TransactionBuilder(account, {
+  fee: '1000000',
+  networkPassphrase: Networks.TESTNET
+})
+  .addOperation(Operation.invokeContractFunction({
+    contract: sacContractId,
+    function: 'transfer',
+    args: [
+      new Address(senderPublicKey).toScVal(),    // from (G...)
+      new Address(contractAddress).toScVal(),     // to (C...)
+      nativeToScVal(BigInt(100_0000000), { type: 'i128' })  // amount
+    ]
+  }))
+  .setTimeout(30)
+  .build();
+
+// Simulate to get resource footprint, then sign and submit
+const prepared = await rpcServer.prepareTransaction(tx);
+prepared.sign(keypair);
+await rpcServer.sendTransaction(prepared);`;
 
 const REMOVE_TRUSTLINE_CODE = `// Remove trustline (balance must be 0)
 const transaction = new TransactionBuilder(account, {
@@ -116,6 +159,60 @@ function TrustlineDiagram({ t }: { t: (key: string) => string }) {
           {t("diagramResult")}
         </span>
       </div>
+    </div>
+  );
+}
+
+function ComparisonTable({ t }: { t: (key: string) => string }) {
+  const rows = [
+    {
+      label: t("sorobanComparisonProtection"),
+      classic: t("sorobanComparisonProtectionClassic"),
+      soroban: t("sorobanComparisonProtectionSoroban"),
+    },
+    {
+      label: t("sorobanComparisonCost"),
+      classic: t("sorobanComparisonCostClassic"),
+      soroban: t("sorobanComparisonCostSoroban"),
+    },
+    {
+      label: t("sorobanComparisonMechanism"),
+      classic: t("sorobanComparisonMechanismClassic"),
+      soroban: t("sorobanComparisonMechanismSoroban"),
+    },
+    {
+      label: t("sorobanComparisonAsset"),
+      classic: t("sorobanComparisonAssetValue"),
+      soroban: t("sorobanComparisonAssetValue"),
+    },
+  ];
+
+  return (
+    <div className="overflow-x-auto rounded-md border">
+      <table className="w-full text-xs">
+        <thead>
+          <tr className="bg-muted/50">
+            <th className="px-2.5 py-2 text-left font-medium" />
+            <th className="px-2.5 py-2 text-left font-medium">
+              {t("sorobanComparisonClassic")}
+            </th>
+            <th className="px-2.5 py-2 text-left font-medium">
+              {t("sorobanComparisonSoroban")}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i} className="border-t">
+              <td className="text-muted-foreground px-2.5 py-2 font-medium">
+                {row.label}
+              </td>
+              <td className="px-2.5 py-2">{row.classic}</td>
+              <td className="px-2.5 py-2">{row.soroban}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -216,10 +313,23 @@ export default function TrustlinesPage() {
                           <TabsContent value="lab" className="pt-3">
                             <WalletSteps steps={t("walletLaboratorySteps")} />
                           </TabsContent>
-                          <TabsContent value="sdk" className="pt-3">
-                            <pre className="bg-muted overflow-x-auto rounded-md p-2.5 text-[11px]">
-                              <code>{TRUSTLINE_CODE_EXAMPLE}</code>
-                            </pre>
+                          <TabsContent value="sdk" className="space-y-3 pt-3">
+                            <div>
+                              <p className="text-muted-foreground mb-1.5 text-[11px] font-medium">
+                                {t("usdcIssuerLabel")}
+                              </p>
+                              <pre className="bg-muted overflow-x-auto rounded-md p-2.5 text-[11px]">
+                                <code>{USDC_TRUSTLINE_CODE}</code>
+                              </pre>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground mb-1.5 text-[11px] font-medium">
+                                {t("eurcIssuerLabel")}
+                              </p>
+                              <pre className="bg-muted overflow-x-auto rounded-md p-2.5 text-[11px]">
+                                <code>{EURC_TRUSTLINE_CODE}</code>
+                              </pre>
+                            </div>
                           </TabsContent>
                         </Tabs>
                       </AccordionContent>
@@ -249,6 +359,66 @@ export default function TrustlinesPage() {
                         <pre className="bg-muted overflow-x-auto rounded-md p-2.5 text-[11px]">
                           <code>{REMOVE_TRUSTLINE_CODE}</code>
                         </pre>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </StaggerItem>
+
+                  <StaggerItem>
+                    <AccordionItem value="soroban">
+                      <AccordionTrigger className="text-sm font-medium">
+                        {t("sorobanTitle")}
+                      </AccordionTrigger>
+                      <AccordionContent className="space-y-3">
+                        <p className="text-muted-foreground text-sm leading-relaxed">
+                          {t("sorobanIntro")}
+                        </p>
+
+                        <div className="space-y-1.5">
+                          <p className="text-sm font-medium">
+                            {t("sorobanWhatIsSac")}
+                          </p>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            {t("sorobanWhatIsSacContent")}
+                          </p>
+                          <p className="text-muted-foreground border-l-2 pl-3 text-sm leading-relaxed italic">
+                            {t("sorobanSameAsset")}
+                          </p>
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <p className="text-sm font-medium">
+                            {t("sorobanHowReceive")}
+                          </p>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            {t("sorobanHowReceiveContent")}
+                          </p>
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <p className="text-sm font-medium">
+                            {t("sorobanAntiSpam")}
+                          </p>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            {t("sorobanAntiSpamContent")}
+                          </p>
+                        </div>
+
+                        <ComparisonTable t={t} />
+
+                        <div>
+                          <p className="text-muted-foreground mb-1.5 text-[11px] font-medium uppercase">
+                            SAC Transfer
+                          </p>
+                          <pre className="bg-muted overflow-x-auto rounded-md p-2.5 text-[11px]">
+                            <code>{SAC_TRANSFER_CODE}</code>
+                          </pre>
+                        </div>
+
+                        <div className="bg-muted/50 rounded-md p-3">
+                          <p className="text-muted-foreground text-xs leading-relaxed">
+                            {t("sorobanFaucetNote")}
+                          </p>
+                        </div>
                       </AccordionContent>
                     </AccordionItem>
                   </StaggerItem>

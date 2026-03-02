@@ -48,11 +48,11 @@
     },
     "usdc": {
       "name": "USD Coin",
-      "description": "Circle's USD stablecoin on Stellar testnet"
+      "description": "Circle's official USDC on Stellar testnet (issuer: GBBD...LA5)"
     },
     "eurc": {
       "name": "Euro Coin",
-      "description": "Circle's EUR stablecoin on Stellar testnet"
+      "description": "Circle's official EURC on Stellar testnet (issuer: GB3Q...TVO)"
     },
     "native": "Native",
     "requiresTrustline": "Requires Trustline",
@@ -90,8 +90,33 @@
     "diagramIssuer": "Issuer",
     "diagramOperation": "changeTrust",
     "diagramResult": "Can now receive USDC / EURC",
+    "usdcIssuerLabel": "USDC — Circle Issuer (GBBD...LA5)",
+    "eurcIssuerLabel": "EURC — Circle Issuer (GB3Q...TVO)",
+    "sorobanTitle": "What about Soroban contracts (C...)?",
+    "sorobanIntro": "Everything above applies to standard accounts (G... addresses). But Soroban smart contracts (C... addresses) work differently — they don't use trustlines at all.",
+    "sorobanWhatIsSac": "What is a SAC?",
+    "sorobanWhatIsSacContent": "A Stellar Asset Contract (SAC) is a smart contract that wraps a classic Stellar asset (like USDC or EURC) so it can be used inside Soroban. Each classic asset has a SAC that is derived deterministically from the asset code and issuer — it's not deployed manually, the protocol generates it automatically.",
+    "sorobanSameAsset": "The key insight: a USDC that moves through a classic payment and one that moves through a SAC transfer are the same USDC. The SAC is just another gateway to the same underlying balance.",
+    "sorobanHowReceive": "How do contracts receive tokens?",
+    "sorobanHowReceiveContent": "When someone calls the SAC's transfer(from, to, amount) function where \"to\" is a C... address, the SAC creates a storage entry with the contract's balance. There is no trustline check — the transfer just works.",
+    "sorobanAntiSpam": "Anti-spam: different approach",
+    "sorobanAntiSpamContent": "Classic accounts use trustlines as anti-spam: you must opt-in before receiving tokens. Soroban takes an economic approach instead: the sender pays resource fees for creating storage entries. There is no opt-in mechanism at the protocol level — any SAC can write a balance to any contract. A contract can implement its own acceptance logic, but by default, SAC transfers always succeed.",
+    "sorobanComparisonClassic": "Classic (G...)",
+    "sorobanComparisonSoroban": "Soroban (C...)",
+    "sorobanComparisonProtection": "Anti-spam",
+    "sorobanComparisonProtectionClassic": "Trustline (opt-in required)",
+    "sorobanComparisonProtectionSoroban": "Sender pays storage fees",
+    "sorobanComparisonCost": "Cost",
+    "sorobanComparisonCostClassic": "0.5 XLM reserve per trustline",
+    "sorobanComparisonCostSoroban": "Resource fees paid by sender",
+    "sorobanComparisonMechanism": "Transfer",
+    "sorobanComparisonMechanismClassic": "Operation.payment",
+    "sorobanComparisonMechanismSoroban": "SAC transfer()",
+    "sorobanComparisonAsset": "Asset",
+    "sorobanComparisonAssetValue": "Same USDC / EURC",
+    "sorobanFaucetNote": "This faucet supports both: G... addresses receive tokens via classic payments (trustline required), C... addresses receive them via SAC (no trustline needed).",
     "practicalExample": "Practical example with USDC testnet",
-    "practicalExampleContent": "To receive USDC on testnet: 1) Fund your account with Friendbot (10,000 XLM), 2) Add a trustline for USDC using the test issuer above, 3) Request USDC from this faucet. Your account will then show both XLM and USDC balances.",
+    "practicalExampleContent": "To receive USDC on testnet: 1) Fund your account with Friendbot (10,000 XLM), 2) Add a trustline for USDC using Circle's official issuer (GBBD...LA5), 3) Request USDC from this faucet. Note: EURC uses a different issuer (GB3Q...TVO).",
     "summaryWhat": "What are Trustlines?",
     "summaryWhatBrief": "Trustlines let your Stellar account hold non-native tokens like USDC and EURC. Without one, you can't receive these assets.",
     "summaryWhy": "Why do I need one for USDC/EURC?",
@@ -130,7 +155,11 @@
   },
   "apiDocs": {
     "title": "API Reference",
-    "subtitle": "Public endpoints for programmatic access to the faucet"
+    "subtitle": "Public endpoints for programmatic access to the faucet",
+    "rateLimitTitle": "Rate Limiting",
+    "rateLimitDescription": "All endpoints are rate limited per IP and per address. When exceeded, a 429 response is returned with X-RateLimit-Limit, X-RateLimit-Remaining, and X-RateLimit-Reset headers.",
+    "webhookTitle": "Callback / Webhook",
+    "webhookDescription": "Pass an optional callbackUrl (HTTPS, public) in your request body. After funding completes, a POST with the result payload will be sent to your URL (fire-and-forget, 5s timeout)."
   },
   "footer": {
     "stellarDocs": "Stellar Docs",

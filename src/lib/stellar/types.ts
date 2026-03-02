@@ -17,6 +17,7 @@ export interface NetworkConfig {
   horizonUrl: string;
   friendbotUrl: string;
   networkPassphrase: string;
+  sorobanRpcUrl: string;
   label: string;
 }
 
@@ -46,4 +47,21 @@ export interface BatchFundResult {
   success: boolean;
   hash?: string;
   error?: string;
+}
+
+export interface RateLimitResult {
+  allowed: boolean;
+  limit: number;
+  remaining: number;
+  resetAt: number;
+}
+
+export interface WebhookPayload {
+  event: "fund" | "fund-token" | "batch-fund";
+  success: boolean;
+  address: string;
+  network: string;
+  token?: string;
+  hash?: string;
+  timestamp: string;
 }

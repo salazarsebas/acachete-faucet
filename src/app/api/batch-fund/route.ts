@@ -2,15 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { validateAddress } from "@/lib/stellar/address-validation";
 import { fundWithFriendbot } from "@/lib/stellar/friendbot";
 import { CAPTCHA_ANSWER, BATCH_FUND_MAX } from "@/lib/stellar/constants";
+import { applyRateLimit } from "@/lib/rate-limit";
+import { isValidCallbackUrl, sendWebhook } from "@/lib/webhook";
 import type { BatchFundResult, Network } from "@/lib/stellar/types";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { addresses, network, captcha } = body as {
+    const { addresses, network, captcha, callbackUrl } = body as {
       addresses: string[];
       network: Network;
       captcha: string;
+      callbackUrl?: string;
     };
 
     if (
@@ -19,6 +22,19 @@ export async function POST(request: NextRequest) {
     ) {
       return NextResponse.json(
         { success: false, message: "Incorrect verification answer" },
+        { status: 400 },
+      );
+    }
+
+    const rateLimited = applyRateLimit(request, "batch-fund");
+    if (rateLimited) return rateLimited;
+
+    if (callbackUrl && !isValidCallbackUrl(callbackUrl)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid callback URL. Must be HTTPS and public.",
+        },
         { status: 400 },
       );
     }
@@ -71,10 +87,23 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    const funded = results.filter((r) => r.success).length;
+
+    if (callbackUrl) {
+      sendWebhook(callbackUrl, {
+        event: "batch-fund",
+        success: funded > 0,
+        address: addresses.join(","),
+        network,
+        hash: results.find((r) => r.success)?.hash,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
     return NextResponse.json({
       success: true,
       results,
-      funded: results.filter((r) => r.success).length,
+      funded,
       total: results.length,
     });
   } catch (error) {

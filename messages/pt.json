@@ -48,11 +48,11 @@
     },
     "usdc": {
       "name": "USD Coin",
-      "description": "Stablecoin USD da Circle em Stellar testnet"
+      "description": "USDC oficial da Circle em Stellar testnet (emissor: GBBD...LA5)"
     },
     "eurc": {
       "name": "Euro Coin",
-      "description": "Stablecoin EUR da Circle em Stellar testnet"
+      "description": "EURC oficial da Circle em Stellar testnet (emissor: GB3Q...TVO)"
     },
     "native": "Nativo",
     "requiresTrustline": "Requer Trustline",
@@ -90,8 +90,33 @@
     "diagramIssuer": "Emissor",
     "diagramOperation": "changeTrust",
     "diagramResult": "Agora pode receber USDC / EURC",
+    "usdcIssuerLabel": "USDC — Emissor Circle (GBBD...LA5)",
+    "eurcIssuerLabel": "EURC — Emissor Circle (GB3Q...TVO)",
+    "sorobanTitle": "E os contratos Soroban (C...)?",
+    "sorobanIntro": "Tudo acima se aplica a contas padrão (endereços G...). Mas os smart contracts Soroban (endereços C...) funcionam diferente — não usam trustlines de forma alguma.",
+    "sorobanWhatIsSac": "O que é um SAC?",
+    "sorobanWhatIsSacContent": "Um Stellar Asset Contract (SAC) é um contrato inteligente que envolve um asset clássico da Stellar (como USDC ou EURC) para que possa ser usado dentro do Soroban. Cada asset clássico possui um SAC derivado deterministicamente do código e emissor do asset — não é implantado manualmente, o protocolo o gera automaticamente.",
+    "sorobanSameAsset": "O ponto chave: um USDC que se move por um payment clássico e um que se move por uma transferência SAC são o mesmo USDC. O SAC é apenas outra porta de entrada para o mesmo saldo subjacente.",
+    "sorobanHowReceive": "Como contratos recebem tokens?",
+    "sorobanHowReceiveContent": "Quando alguém chama a função transfer(from, to, amount) do SAC onde \"to\" é um endereço C..., o SAC cria uma entrada de armazenamento com o saldo do contrato. Não há verificação de trustline — a transferência simplesmente funciona.",
+    "sorobanAntiSpam": "Anti-spam: abordagem diferente",
+    "sorobanAntiSpamContent": "Contas clássicas usam trustlines como anti-spam: você deve fazer opt-in antes de receber tokens. Soroban adota uma abordagem econômica: o remetente paga os resource fees pela criação de entradas de armazenamento. Não há mecanismo de opt-in a nível de protocolo — qualquer SAC pode escrever um saldo em qualquer contrato. Um contrato pode implementar sua própria lógica de aceitação, mas por padrão, transferências SAC sempre são executadas.",
+    "sorobanComparisonClassic": "Clássico (G...)",
+    "sorobanComparisonSoroban": "Soroban (C...)",
+    "sorobanComparisonProtection": "Anti-spam",
+    "sorobanComparisonProtectionClassic": "Trustline (opt-in obrigatório)",
+    "sorobanComparisonProtectionSoroban": "Remetente paga fees de storage",
+    "sorobanComparisonCost": "Custo",
+    "sorobanComparisonCostClassic": "0.5 XLM de reserva por trustline",
+    "sorobanComparisonCostSoroban": "Resource fees pagos pelo remetente",
+    "sorobanComparisonMechanism": "Transferência",
+    "sorobanComparisonMechanismClassic": "Operation.payment",
+    "sorobanComparisonMechanismSoroban": "SAC transfer()",
+    "sorobanComparisonAsset": "Asset",
+    "sorobanComparisonAssetValue": "Mesmo USDC / EURC",
+    "sorobanFaucetNote": "Este faucet suporta ambos: endereços G... recebem tokens via payments clássicos (trustline obrigatória), endereços C... os recebem via SAC (sem trustline).",
     "practicalExample": "Exemplo prático com USDC testnet",
-    "practicalExampleContent": "Para receber USDC na testnet: 1) Financie sua conta com Friendbot (10.000 XLM), 2) Adicione uma trustline para USDC usando o emissor de teste acima, 3) Solicite USDC neste faucet. Sua conta mostrará então saldos de XLM e USDC.",
+    "practicalExampleContent": "Para receber USDC na testnet: 1) Financie sua conta com Friendbot (10.000 XLM), 2) Adicione uma trustline para USDC usando o emissor oficial da Circle (GBBD...LA5), 3) Solicite USDC neste faucet. Nota: EURC usa um emissor diferente (GB3Q...TVO).",
     "summaryWhat": "O que são Trustlines?",
     "summaryWhatBrief": "Trustlines permitem que sua conta Stellar mantenha tokens não nativos como USDC e EURC. Sem uma, você não pode receber esses ativos.",
     "summaryWhy": "Por que preciso de uma para USDC/EURC?",
@@ -130,7 +155,11 @@
   },
   "apiDocs": {
     "title": "Referência API",
-    "subtitle": "Endpoints públicos para acesso programático ao faucet"
+    "subtitle": "Endpoints públicos para acesso programático ao faucet",
+    "rateLimitTitle": "Limite de Taxa",
+    "rateLimitDescription": "Todos os endpoints possuem limite de taxa por IP e por endereço. Quando excedido, uma resposta 429 é retornada com as headers X-RateLimit-Limit, X-RateLimit-Remaining e X-RateLimit-Reset.",
+    "webhookTitle": "Callback / Webhook",
+    "webhookDescription": "Passe um callbackUrl opcional (HTTPS, público) no corpo da sua requisição. Após completar o financiamento, um POST com o resultado será enviado para sua URL (fire-and-forget, timeout de 5s)."
   },
   "footer": {
     "stellarDocs": "Docs da Stellar",

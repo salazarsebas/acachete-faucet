@@ -74,6 +74,18 @@ export function BatchFunding({ network, onNetworkChange }: BatchFundingProps) {
       });
 
       const data = await response.json();
+
+      if (response.status === 429) {
+        const resetHeader = response.headers.get("X-RateLimit-Reset");
+        const resetTime = resetHeader
+          ? new Date(parseInt(resetHeader) * 1000).toLocaleTimeString()
+          : "";
+        setError(
+          resetTime ? `${data.message} (resets at ${resetTime})` : data.message,
+        );
+        return;
+      }
+
       if (!data.success && !data.results) {
         setError(data.message);
       } else {

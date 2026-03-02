@@ -1,5 +1,7 @@
 import { Operation, Asset } from "@stellar/stellar-sdk";
 import { buildAndSubmitTransaction } from "./transaction";
+import { validateAddress } from "./address-validation";
+import { distributeTokenViaSAC } from "./soroban";
 import type { Network, TokenCode } from "./types";
 import { TESTNET_TOKENS, DISTRIBUTION_AMOUNT } from "./constants";
 
@@ -24,6 +26,13 @@ export async function distributeToken(
     };
   }
 
+  // Route C... addresses through Soroban SAC
+  const addressType = validateAddress(destinationAddress);
+  if (addressType === "C") {
+    return distributeTokenViaSAC(destinationAddress, tokenCode, network);
+  }
+
+  // Classic payment for G... addresses
   const asset = new Asset(tokenInfo.code, tokenInfo.issuer!);
   const amount = DISTRIBUTION_AMOUNT[tokenCode];
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateAddress } from "@/lib/stellar/address-validation";
 import { getBalances } from "@/lib/stellar/account";
+import { applyRateLimit } from "@/lib/rate-limit";
 import type { Network } from "@/lib/stellar/types";
 
 export async function GET(
@@ -8,6 +9,9 @@ export async function GET(
   { params }: { params: Promise<{ address: string }> },
 ) {
   try {
+    const rateLimited = applyRateLimit(request, "account");
+    if (rateLimited) return rateLimited;
+
     const { address } = await params;
     const network =
       (request.nextUrl.searchParams.get("network") as Network) || "testnet";

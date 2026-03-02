@@ -4,8 +4,7 @@
  * Single script that bootstraps everything needed for the faucet:
  *
  *   1. Distributor account  → generates keypair, funds via Friendbot
- *   2. Token issuer account → generates keypair, funds via Friendbot,
- *      adds trustlines on distributor, mints 1M USDC + 1M EURC
+ *   2. Trustlines           → adds trustlines to Circle's official USDC/EURC issuers
  *   3. XLM accumulation     → creates N temp accounts, funds each via
  *      Friendbot, transfers XLM to distributor
  *   4. Writes .env.local    → all keys + config ready to use
@@ -15,7 +14,6 @@
  *
  * Options:
  *   --accounts N   Number of temp accounts for XLM accumulation (default: 5)
- *   --mint N       Amount of USDC/EURC to mint (default: 1000000)
  */
 
 import {
@@ -36,6 +34,11 @@ import { join } from "path";
 const HORIZON_URL = "https://horizon-testnet.stellar.org";
 const FRIENDBOT_URL = "https://friendbot.stellar.org";
 
+const CIRCLE_USDC_ISSUER =
+  "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5";
+const CIRCLE_EURC_ISSUER =
+  "GB3Q6QDZYTHWT7E5PVS3W7FUT5GVAFC5KSZFFLPU25GO7VTC3NM2ZTVO";
+
 const args = process.argv.slice(2);
 function getArg(name: string, fallback: string): string {
   const idx = args.indexOf(`--${name}`);
@@ -43,7 +46,6 @@ function getArg(name: string, fallback: string): string {
 }
 
 const ACCUMULATION_COUNT = parseInt(getArg("accounts", "5"), 10);
-const MINT_AMOUNT = getArg("mint", "1000000");
 const DISTRIBUTION_AMOUNT = "100";
 
 const server = new Horizon.Server(HORIZON_URL);
@@ -99,28 +101,18 @@ async function createDistributor() {
 }
 
 // ---------------------------------------------------------------------------
-// Step 2: Issuer + Trustlines + Mint
+// Step 2: Trustlines to Circle's Issuers
 // ---------------------------------------------------------------------------
 
-async function createIssuerAndMint(distributorKeypair: Keypair) {
-  console.log("━━━ Step 2/3: Token Issuer + Mint ━━━\n");
+async function setupTrustlines(distributorKeypair: Keypair) {
+  console.log("━━━ Step 2/3: Trustlines (Circle Issuers) ━━━\n");
 
-  const issuerKeypair = Keypair.random();
-  console.log(`  Issuer Public Key:  ${issuerKeypair.publicKey()}`);
-  console.log(`  Issuer Secret Key:  ${issuerKeypair.secret()}`);
+  console.log(`  USDC Issuer: ${CIRCLE_USDC_ISSUER} (Circle)`);
+  console.log(`  EURC Issuer: ${CIRCLE_EURC_ISSUER} (Circle)\n`);
 
-  process.stdout.write("  Funding issuer via Friendbot...");
-  const ok = await fundFriendbot(issuerKeypair.publicKey());
-  if (!ok) {
-    console.error(" FAILED");
-    process.exit(1);
-  }
-  console.log(" OK\n");
+  const usdc = new Asset("USDC", CIRCLE_USDC_ISSUER);
+  const eurc = new Asset("EURC", CIRCLE_EURC_ISSUER);
 
-  const usdc = new Asset("USDC", issuerKeypair.publicKey());
-  const eurc = new Asset("EURC", issuerKeypair.publicKey());
-
-  // Trustlines on distributor
   process.stdout.write("  Adding USDC trustline on distributor...");
   await submitTx(distributorKeypair, (b) =>
     b.addOperation(Operation.changeTrust({ asset: usdc })),
@@ -131,34 +123,7 @@ async function createIssuerAndMint(distributorKeypair: Keypair) {
   await submitTx(distributorKeypair, (b) =>
     b.addOperation(Operation.changeTrust({ asset: eurc })),
   );
-  console.log(" OK");
-
-  // Mint tokens
-  process.stdout.write(`  Minting ${MINT_AMOUNT} USDC...`);
-  await submitTx(issuerKeypair, (b) =>
-    b.addOperation(
-      Operation.payment({
-        destination: distributorKeypair.publicKey(),
-        asset: usdc,
-        amount: MINT_AMOUNT,
-      }),
-    ),
-  );
-  console.log(" OK");
-
-  process.stdout.write(`  Minting ${MINT_AMOUNT} EURC...`);
-  await submitTx(issuerKeypair, (b) =>
-    b.addOperation(
-      Operation.payment({
-        destination: distributorKeypair.publicKey(),
-        asset: eurc,
-        amount: MINT_AMOUNT,
-      }),
-    ),
-  );
   console.log(" OK\n");
-
-  return issuerKeypair;
 }
 
 // ---------------------------------------------------------------------------
@@ -217,13 +182,11 @@ async function accumulateXLM(distributorPublicKey: string) {
 // Write .env.local
 // ---------------------------------------------------------------------------
 
-function writeEnvFile(distributorKeypair: Keypair, issuerKeypair: Keypair) {
+function writeEnvFile(distributorKeypair: Keypair) {
   const envPath = join(process.cwd(), ".env.local");
   const content = [
     `DISTRIBUTOR_PUBLIC_KEY=${distributorKeypair.publicKey()}`,
     `DISTRIBUTOR_SECRET_KEY=${distributorKeypair.secret()}`,
-    `TOKEN_ISSUER_PUBLIC_KEY=${issuerKeypair.publicKey()}`,
-    `TOKEN_ISSUER_SECRET_KEY=${issuerKeypair.secret()}`,
     `DISTRIBUTION_AMOUNT_XLM=${DISTRIBUTION_AMOUNT}`,
     `DISTRIBUTION_AMOUNT_USDC=${DISTRIBUTION_AMOUNT}`,
     `DISTRIBUTION_AMOUNT_EURC=${DISTRIBUTION_AMOUNT}`,
@@ -246,21 +209,22 @@ async function main() {
   console.log("║   Acachete Faucet — Full Setup       ║");
   console.log("╚══════════════════════════════════════╝\n");
   console.log(`  Accumulation accounts: ${ACCUMULATION_COUNT}`);
-  console.log(`  Mint per token:        ${MINT_AMOUNT}`);
+  console.log(`  USDC issuer (Circle):  ${CIRCLE_USDC_ISSUER}`);
+  console.log(`  EURC issuer (Circle):  ${CIRCLE_EURC_ISSUER}`);
   console.log(`  Distribution amount:   ${DISTRIBUTION_AMOUNT}\n`);
 
   // Step 1
   const distributorKeypair = await createDistributor();
 
   // Step 2
-  const issuerKeypair = await createIssuerAndMint(distributorKeypair);
+  await setupTrustlines(distributorKeypair);
 
   // Step 3
   const { transferred } = await accumulateXLM(distributorKeypair.publicKey());
 
   // Write env
   console.log("━━━ Writing .env.local ━━━\n");
-  writeEnvFile(distributorKeypair, issuerKeypair);
+  writeEnvFile(distributorKeypair);
 
   // Summary
   const totalXLM = 10000 + transferred * 9998;
@@ -268,12 +232,12 @@ async function main() {
   console.log("║   Setup Complete                     ║");
   console.log("╚══════════════════════════════════════╝\n");
   console.log(`  Distributor:  ${distributorKeypair.publicKey()}`);
-  console.log(`  Issuer:       ${issuerKeypair.publicKey()}`);
   console.log(`  XLM balance:  ~${totalXLM.toLocaleString()} XLM`);
-  console.log(`  USDC balance: ${parseInt(MINT_AMOUNT).toLocaleString()} USDC`);
-  console.log(`  EURC balance: ${parseInt(MINT_AMOUNT).toLocaleString()} EURC`);
   console.log(`  Time:         ${elapsed(start)}`);
-  console.log(`\n  Run \`bun run dev\` to start the faucet.\n`);
+  console.log(`\n  Next steps:`);
+  console.log(`  1. Go to https://faucet.circle.com`);
+  console.log(`  2. Fund distributor with USDC and EURC`);
+  console.log(`  3. Run \`bun run dev\` to start the faucet\n`);
 }
 
 main().catch((err) => {

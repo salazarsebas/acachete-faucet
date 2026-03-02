@@ -5,19 +5,22 @@ export const NETWORKS: Record<Network, NetworkConfig> = {
     horizonUrl: "https://horizon-testnet.stellar.org",
     friendbotUrl: "https://friendbot.stellar.org",
     networkPassphrase: "Test SDF Network ; September 2015",
+    sorobanRpcUrl: "https://soroban-testnet.stellar.org",
     label: "Testnet",
   },
   futurenet: {
     horizonUrl: "https://horizon-futurenet.stellar.org",
     friendbotUrl: "https://friendbot-futurenet.stellar.org",
     networkPassphrase: "Test SDF Future Network ; October 2022",
+    sorobanRpcUrl: "https://rpc-futurenet.stellar.org",
     label: "Futurenet",
   },
 };
 
-const TOKEN_ISSUER =
-  process.env.TOKEN_ISSUER_PUBLIC_KEY ||
+export const CIRCLE_USDC_ISSUER =
   "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5";
+export const CIRCLE_EURC_ISSUER =
+  "GB3Q6QDZYTHWT7E5PVS3W7FUT5GVAFC5KSZFFLPU25GO7VTC3NM2ZTVO";
 
 export const TESTNET_TOKENS: Record<TokenCode, TokenInfo> = {
   XLM: {
@@ -30,18 +33,18 @@ export const TESTNET_TOKENS: Record<TokenCode, TokenInfo> = {
   USDC: {
     code: "USDC",
     name: "USD Coin",
-    issuer: TOKEN_ISSUER,
+    issuer: CIRCLE_USDC_ISSUER,
     isNative: false,
     requiresTrustline: true,
-    description: "USD stablecoin on Stellar testnet",
+    description: "Circle's official USD stablecoin on Stellar testnet",
   },
   EURC: {
     code: "EURC",
     name: "Euro Coin",
-    issuer: TOKEN_ISSUER,
+    issuer: CIRCLE_EURC_ISSUER,
     isNative: false,
     requiresTrustline: true,
-    description: "EUR stablecoin on Stellar testnet",
+    description: "Circle's official EUR stablecoin on Stellar testnet",
   },
 };
 

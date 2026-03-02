@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServer } from "@/lib/stellar/client";
+import { applyRateLimit } from "@/lib/rate-limit";
 import type { Network } from "@/lib/stellar/types";
 
 export async function GET(request: NextRequest) {
+  const rateLimited = applyRateLimit(request, "network-status");
+  if (rateLimited) return rateLimited;
+
   const network =
     (request.nextUrl.searchParams.get("network") as Network) || "testnet";
 

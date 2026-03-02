@@ -82,6 +82,21 @@ export function FaucetForm({ network, onNetworkChange }: FaucetFormProps) {
       });
 
       const data = await response.json();
+
+      if (response.status === 429) {
+        const resetHeader = response.headers.get("X-RateLimit-Reset");
+        const resetTime = resetHeader
+          ? new Date(parseInt(resetHeader) * 1000).toLocaleTimeString()
+          : "";
+        setResult({
+          success: false,
+          message: resetTime
+            ? `${data.message} (resets at ${resetTime})`
+            : data.message,
+        });
+        return;
+      }
+
       setResult({
         success: data.success,
         message: data.message,
