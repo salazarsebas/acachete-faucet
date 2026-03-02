@@ -1,33 +1,28 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
+import { locales } from "@/i18n/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://acachete.xyz';
+  const baseUrl = "https://faucet-stellar.acachete.xyz";
   const currentDate = new Date();
-  
-  return [
-    {
-      url: baseUrl,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/stellar-testnet-faucet`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/stellar-development-resources`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-  ];
+
+  const entries: MetadataRoute.Sitemap = [];
+
+  for (const locale of locales) {
+    entries.push(
+      {
+        url: `${baseUrl}/${locale}`,
+        lastModified: currentDate,
+        changeFrequency: "weekly",
+        priority: 1,
+      },
+      {
+        url: `${baseUrl}/${locale}/trustlines`,
+        lastModified: currentDate,
+        changeFrequency: "monthly",
+        priority: 0.8,
+      },
+    );
+  }
+
+  return entries;
 }

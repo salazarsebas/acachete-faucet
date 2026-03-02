@@ -1,0 +1,19 @@
+diff --git a/index.js b/index.js
+index a30b32cdf91b6eb501f9ad314804dcca434a9e9c..a773c93d8dc2ac2a09d8605827adb3324e57cf6a 100644
+--- a/index.js
++++ b/index.js
+@@ -18,13 +18,7 @@ var debug = require("./debug");
+ }());
+ 
+ // Whether to use the native URL object or the legacy url module
+-var useNativeURL = false;
+-try {
+-  assert(new URL(""));
+-}
+-catch (error) {
+-  useNativeURL = error.code === "ERR_INVALID_URL";
+-}
++var useNativeURL = typeof URL !== "undefined";
+ 
+ // URL fields to preserve in copy operations
+ var preservedUrlFields = [
